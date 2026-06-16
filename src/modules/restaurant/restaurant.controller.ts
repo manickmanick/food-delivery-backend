@@ -60,4 +60,41 @@ export class RestaurantController {
       data: restaurant,
     });
   }
+
+  async updateRestaurant(
+  req: AuthRequest,
+  res: Response
+) {
+
+  const restaurant =
+    await restaurantService.updateRestaurant(
+      Number(req.params.id),
+      req.body,
+      req.user!.id,
+      req.user!.role
+    );
+
+  return res.status(200).json({
+    success: true,
+    message: "Restaurant updated successfully",
+    data: restaurant,
+  });
+}
+
+async deleteRestaurant(
+  req: AuthRequest,
+  res: Response
+) {
+
+  await restaurantService.deleteRestaurant(
+    Number(req.params.id),
+    req.user!.id,
+    req.user!.role
+  );
+
+  return res.status(200).json({
+    success: true,
+    message: "Restaurant deleted successfully",
+  });
+}
 }

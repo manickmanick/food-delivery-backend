@@ -32,4 +32,62 @@ export class RestaurantService {
 
     return restaurant;
   }
+
+  async updateRestaurant(
+    restaurantId: number,
+    data: {
+      name?: string;
+      description?: string;
+      address?: string;
+      isOpen?: boolean;
+    },
+    userId: number,
+    role: string,
+  ) {
+    const restaurant = await this.restaurantRepository.findById(restaurantId);
+
+    if (!restaurant) {
+      throw new AppError("Restaurant not found", 404);
+    }
+
+    if (restaurant.ownerId !== userId) {
+      throw new AppError("You are not allowed to update this restaurant", 403);
+    }
+
+    return this.restaurantRepository.update(restaurantId, data);
+  }
+
+  async deleteRestaurant(
+  restaurantId: number,
+  userId: number,
+  role: string
+) {
+
+  const restaurant =
+    await this.restaurantRepository.findById(
+      restaurantId
+    );
+
+  if (!restaurant) {
+    throw new AppError(
+      "Restaurant not found",
+      404
+    );
+  }
+
+  if (
+    restaurant.ownerId !== userId
+  ) {
+    throw new AppError(
+      "You are not allowed to delete this restaurant",
+      403
+    );
+  }
+
+  await this.restaurantRepository.delete(
+    restaurantId
+  );
+
+  return;
+}
 }

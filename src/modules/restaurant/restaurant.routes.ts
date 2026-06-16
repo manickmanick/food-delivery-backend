@@ -10,7 +10,7 @@ import { Role } from "../../constants/role";
 
 import { validate } from "../../middlewares/validate.middleware";
 
-import { createRestaurantSchema } from "./restaurant.validation";
+import { createRestaurantSchema,updateRestaurantSchema } from "./restaurant.validation";
 
 import { asyncHandler } from "../../middlewares/async-handler";
 
@@ -36,6 +36,35 @@ router.get(
 router.get(
   "/:id",
   asyncHandler(restaurantController.getRestaurant.bind(restaurantController)),
+);
+
+router.put(
+  "/:id",
+  protect,
+  authorize(
+    Role.ADMIN,
+    Role.RESTAURANT_OWNER
+  ),
+  validate(updateRestaurantSchema),
+  asyncHandler(
+    restaurantController
+      .updateRestaurant
+      .bind(restaurantController)
+  )
+);
+
+router.delete(
+  "/:id",
+  protect,
+  authorize(
+    Role.ADMIN,
+    Role.RESTAURANT_OWNER
+  ),
+  asyncHandler(
+    restaurantController
+      .deleteRestaurant
+      .bind(restaurantController)
+  )
 );
 
 export default router;

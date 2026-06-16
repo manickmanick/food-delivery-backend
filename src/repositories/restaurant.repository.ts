@@ -43,4 +43,29 @@ export class RestaurantRepository {
       },
     });
   }
+
+  async update(
+  id: number,
+  data: {
+    name?: string;
+    description?: string;
+    address?: string;
+    isOpen?: boolean;
+  }
+) {
+  return prisma.restaurant.update({
+    where: {
+      id,
+    },
+    data,
+  });
+}
+
+async delete(id: number) {
+  return prisma.restaurant.delete({
+    where: {
+      id,
+    },
+  });
+}
 }
