@@ -23,9 +23,9 @@ model User {
   role        Role         @default(CUSTOMER)
   cart        Cart?
   restaurants Restaurant[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  orders      Order[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model Restaurant {
@@ -41,8 +41,8 @@ model Restaurant {
 
   ownerId Int
 
-  owner User @relation(fields: [ownerId], references: [id])
-
+  owner     User       @relation(fields: [ownerId], references: [id])
+  orders    Order[]
   menuItems MenuItem[]
   carts     Cart[]
   createdAt DateTime   @default(now())
@@ -72,8 +72,8 @@ model MenuItem {
 
   restaurantId Int
   categoryId   Int
-
-  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+  orderItems   OrderItem[]
+  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
 
   category Category @relation(fields: [categoryId], references: [id])
 
@@ -114,4 +114,50 @@ model CartItem {
   menuItem MenuItem @relation(fields: [menuItemId], references: [id])
 
   @@unique([cartId, menuItemId])
+}
+
+enum OrderStatus {
+  PLACED
+  ACCEPTED
+  PREPARING
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+
+  userId Int
+
+  restaurantId Int
+
+  totalAmount Decimal @db.Decimal(10, 2)
+
+  status OrderStatus @default(PLACED)
+
+  user User @relation(fields: [userId], references: [id])
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+
+  items OrderItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model OrderItem {
+  id Int @id @default(autoincrement())
+
+  orderId Int
+
+  menuItemId Int
+
+  quantity Int
+
+  price Decimal @db.Decimal(10, 2)
+
+  order Order @relation(fields: [orderId], references: [id])
+
+  menuItem MenuItem @relation(fields: [menuItemId], references: [id])
 }
