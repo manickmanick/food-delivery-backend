@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import authRoutes from "./modules/auth/auth.routes";
 
 const app = express();
 
@@ -19,5 +20,8 @@ app.get("/health", (_, res) => {
     message: "Server running"
   });
 });
+
+app.use("/api/auth", authRoutes);
+
 
 export default app;
