@@ -10,7 +10,7 @@ import { asyncHandler } from "../../middlewares/async-handler";
 
 import { validate } from "../../middlewares/validate.middleware";
 
-import { updateOrderStatusSchema } from "./order.validation";
+import { placeOrderSchema, updateOrderStatusSchema } from "./order.validation";
 
 import { Role } from "../../constants/role";
 
@@ -21,6 +21,7 @@ const orderController = new OrderController();
 router.post(
   "/",
   protect,
+  validate(placeOrderSchema),
   asyncHandler(orderController.placeOrder.bind(orderController)),
 );
 

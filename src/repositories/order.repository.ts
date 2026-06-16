@@ -18,7 +18,7 @@ export class OrderRepository {
     });
   }
 
-  async createOrderTransaction(userId: number) {
+  async createOrderTransaction(userId: number, addressId: number) {
     return prisma.$transaction(async (tx) => {
       const cart = await tx.cart.findUnique({
         where: {
@@ -49,6 +49,7 @@ export class OrderRepository {
           userId,
           restaurantId: cart.restaurantId,
           totalAmount,
+          addressId,
         },
       });
 

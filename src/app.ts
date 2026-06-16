@@ -8,6 +8,7 @@ import restaurantRoutes from "./modules/restaurant/restaurant.routes";
 import menuRoutes from "./modules/menu/menu.routes";
 import cartRoutes from "./modules/cart/cart.routes";
 import orderRoutes from "./modules/order/order.routes";
+import addressRoutes from "./modules/address/address.routes";
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/menu-items", menuRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/addresses", addressRoutes);
 app.use(errorMiddleware);
 
 export default app;

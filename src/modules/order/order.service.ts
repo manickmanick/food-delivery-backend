@@ -14,7 +14,8 @@ export class OrderService {
     new OrderRepository();
 
   async placeOrder(
-    userId: number
+    userId: number,
+    addressId:number
   ) {
 
     const cart =
@@ -39,7 +40,8 @@ export class OrderService {
 
     return this.orderRepository
       .createOrderTransaction(
-        userId
+        userId,
+        addressId
       );
   }
 

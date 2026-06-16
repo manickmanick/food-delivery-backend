@@ -9,3 +9,7 @@ export const updateOrderStatusSchema = z.object({
     "CANCELLED",
   ]),
 });
+
+export const placeOrderSchema = z.object({
+  addressId: z.number().positive(),
+});

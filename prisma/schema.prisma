@@ -24,6 +24,7 @@ model User {
   cart        Cart?
   restaurants Restaurant[]
   orders      Order[]
+  addresses   Address[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
 }
@@ -140,10 +141,11 @@ model Order {
 
   restaurant Restaurant @relation(fields: [restaurantId], references: [id])
 
-  items OrderItem[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  items     OrderItem[]
+  addressId Int?
+  address   Address?    @relation(fields: [addressId], references: [id])
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }
 
 model OrderItem {
@@ -160,4 +162,34 @@ model OrderItem {
   order Order @relation(fields: [orderId], references: [id])
 
   menuItem MenuItem @relation(fields: [menuItemId], references: [id])
+}
+
+model Address {
+  id Int @id @default(autoincrement())
+
+  userId Int
+
+  label String
+
+  addressLine1 String
+
+  addressLine2 String?
+
+  city String
+
+  state String
+
+  pincode String
+
+  landmark String?
+
+  isDefault Boolean @default(false)
+
+  user   User    @relation(fields: [userId], references: [id])
+  orders Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
 }

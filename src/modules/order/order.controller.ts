@@ -4,38 +4,22 @@ import { OrderService } from "./order.service";
 
 import { AuthRequest } from "../../types/auth-request";
 
-const orderService =
-  new OrderService();
+const orderService = new OrderService();
 
 export class OrderController {
-
-  async placeOrder(
-    req: AuthRequest,
-    res: Response
-  ) {
-
-    const order =
-      await orderService.placeOrder(
-        req.user!.id
-      );
+  async placeOrder(req: AuthRequest, res: Response) {
+    const { addressId } = req.body;
+    const order = await orderService.placeOrder(req.user!.id, addressId);
 
     return res.status(201).json({
       success: true,
-      message:
-        "Order placed successfully",
+      message: "Order placed successfully",
       data: order,
     });
   }
 
-  async getMyOrders(
-    req: AuthRequest,
-    res: Response
-  ) {
-
-    const orders =
-      await orderService.getMyOrders(
-        req.user!.id
-      );
+  async getMyOrders(req: AuthRequest, res: Response) {
+    const orders = await orderService.getMyOrders(req.user!.id);
 
     return res.status(200).json({
       success: true,
@@ -43,16 +27,11 @@ export class OrderController {
     });
   }
 
-  async getOrderById(
-    req: AuthRequest,
-    res: Response
-  ) {
-
-    const order =
-      await orderService.getOrderById(
-        Number(req.params.id),
-        req.user!.id
-      );
+  async getOrderById(req: AuthRequest, res: Response) {
+    const order = await orderService.getOrderById(
+      Number(req.params.id),
+      req.user!.id,
+    );
 
     return res.status(200).json({
       success: true,
@@ -60,39 +39,25 @@ export class OrderController {
     });
   }
 
-  async acceptOrder(
-    req: AuthRequest,
-    res: Response
-  ) {
-
-    const order =
-      await orderService.acceptOrder(
-        Number(req.params.id)
-      );
+  async acceptOrder(req: AuthRequest, res: Response) {
+    const order = await orderService.acceptOrder(Number(req.params.id));
 
     return res.status(200).json({
       success: true,
-      message:
-        "Order accepted",
+      message: "Order accepted",
       data: order,
     });
   }
 
-  async updateOrderStatus(
-    req: AuthRequest,
-    res: Response
-  ) {
-
-    const order =
-      await orderService.updateOrderStatus(
-        Number(req.params.id),
-        req.body.status
-      );
+  async updateOrderStatus(req: AuthRequest, res: Response) {
+    const order = await orderService.updateOrderStatus(
+      Number(req.params.id),
+      req.body.status,
+    );
 
     return res.status(200).json({
       success: true,
-      message:
-        "Order status updated",
+      message: "Order status updated",
       data: order,
     });
   }
