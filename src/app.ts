@@ -4,6 +4,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import authRoutes from "./modules/auth/auth.routes";
 import { errorMiddleware } from "./middlewares/error.middleware";
+import restaurantRoutes from "./modules/restaurant/restaurant.routes";
 
 const app = express();
 
@@ -23,6 +24,10 @@ app.get("/health", (_, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use(
+  "/api/restaurants",
+  restaurantRoutes
+);
 app.use(errorMiddleware);
 
 
