@@ -7,6 +7,7 @@ import { errorMiddleware } from "./middlewares/error.middleware";
 import restaurantRoutes from "./modules/restaurant/restaurant.routes";
 import menuRoutes from "./modules/menu/menu.routes";
 import cartRoutes from "./modules/cart/cart.routes";
+import orderRoutes from "./modules/order/order.routes";
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/menu-items", menuRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/orders", orderRoutes);
 app.use(errorMiddleware);
 
 export default app;
