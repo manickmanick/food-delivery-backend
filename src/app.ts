@@ -5,6 +5,7 @@ import morgan from "morgan";
 import authRoutes from "./modules/auth/auth.routes";
 import { errorMiddleware } from "./middlewares/error.middleware";
 import restaurantRoutes from "./modules/restaurant/restaurant.routes";
+import menuRoutes from "./modules/menu/menu.routes";
 
 const app = express();
 
@@ -19,16 +20,13 @@ app.use(morgan("dev"));
 app.get("/health", (_, res) => {
   res.status(200).json({
     success: true,
-    message: "Server running"
+    message: "Server running",
   });
 });
 
 app.use("/api/auth", authRoutes);
-app.use(
-  "/api/restaurants",
-  restaurantRoutes
-);
+app.use("/api/restaurants", restaurantRoutes);
+app.use("/api/menu-items", menuRoutes);
 app.use(errorMiddleware);
-
 
 export default app;
