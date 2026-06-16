@@ -10,6 +10,7 @@ import {
   registerSchema,
   loginSchema,
 } from "./auth.validation";
+import { protect } from "../../middlewares/auth.middleware";
 
 const router = Router();
 
@@ -28,6 +29,22 @@ router.post(
   validate(loginSchema),
   asyncHandler(
     authController.login.bind(authController)
+  )
+);
+
+// testing route
+router.get(
+  "/me",
+  protect,
+  asyncHandler(
+    async (req, res) => {
+
+      res.json({
+        success: true,
+        user: req.user,
+      });
+
+    }
   )
 );
 
