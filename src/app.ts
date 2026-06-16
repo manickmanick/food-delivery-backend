@@ -6,6 +6,7 @@ import authRoutes from "./modules/auth/auth.routes";
 import { errorMiddleware } from "./middlewares/error.middleware";
 import restaurantRoutes from "./modules/restaurant/restaurant.routes";
 import menuRoutes from "./modules/menu/menu.routes";
+import cartRoutes from "./modules/cart/cart.routes";
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.get("/health", (_, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/restaurants", restaurantRoutes);
 app.use("/api/menu-items", menuRoutes);
+app.use("/api/cart", cartRoutes);
 app.use(errorMiddleware);
 
 export default app;
