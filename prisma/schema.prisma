@@ -15,17 +15,17 @@ enum Role {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  name     String
-  email    String  @unique
-  password String
-  phone    String? @unique
-  role     Role    @default(CUSTOMER)
+  id          Int          @id @default(autoincrement())
+  name        String
+  email       String       @unique
+  password    String
+  phone       String?      @unique
+  role        Role         @default(CUSTOMER)
+  cart        Cart?
+  restaurants Restaurant[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  restaurants Restaurant[]
 }
 
 model Restaurant {
@@ -44,9 +44,9 @@ model Restaurant {
   owner User @relation(fields: [ownerId], references: [id])
 
   menuItems MenuItem[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  carts     Cart[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 model Category {
@@ -77,6 +77,41 @@ model MenuItem {
 
   category Category @relation(fields: [categoryId], references: [id])
 
+  cartItems CartItem[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Cart {
+  id Int @id @default(autoincrement())
+
+  userId Int @unique
+
+  restaurantId Int
+
+  user User @relation(fields: [userId], references: [id])
+
+  restaurant Restaurant @relation(fields: [restaurantId], references: [id])
+
+  items CartItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CartItem {
+  id Int @id @default(autoincrement())
+
+  quantity Int
+
+  cartId Int
+
+  menuItemId Int
+
+  cart Cart @relation(fields: [cartId], references: [id])
+
+  menuItem MenuItem @relation(fields: [menuItemId], references: [id])
+
+  @@unique([cartId, menuItemId])
 }
