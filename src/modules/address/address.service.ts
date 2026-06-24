@@ -1,11 +1,11 @@
 import { AppError } from "../../utils/app-error";
-
+import { CreateAddressDto } from "./address.types";
 import { AddressRepository } from "../../repositories/address.repository";
 
 export class AddressService {
   private addressRepository = new AddressRepository();
 
-  async createAddress(userId: number, body: any) {
+  async createAddress(userId: number, body: CreateAddressDto) {
     if (body.isDefault) {
       await this.addressRepository.clearDefaultAddresses(userId);
     }
@@ -34,7 +34,11 @@ export class AddressService {
     return address;
   }
 
-  async updateAddress(addressId: number, userId: number, body: any) {
+  async updateAddress(
+    addressId: number,
+    userId: number,
+    body: CreateAddressDto,
+  ) {
     const address = await this.addressRepository.findById(addressId);
 
     if (!address) {

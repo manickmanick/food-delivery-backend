@@ -18,4 +18,8 @@ export const createAddressSchema = z.object({
   isDefault: z.boolean().optional(),
 });
 
-export const updateAddressSchema = createAddressSchema.partial();
+export const updateAddressSchema = createAddressSchema
+  .partial()
+  .refine((data) => Object.keys(data).length > 0, {
+    message: "At least one field is required",
+  });
