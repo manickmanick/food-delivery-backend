@@ -92,4 +92,19 @@ export class MenuController {
         "Menu item deleted successfully",
     });
   }
+  async getRestaurantMenu(
+  req: AuthRequest,
+  res: Response
+) {
+
+  const items =
+    await menuService.getMenuItemsByRestaurant(
+      Number(req.params.restaurantId)
+    );
+
+  return res.status(200).json({
+    success: true,
+    data: items,
+  });
+}
 }
