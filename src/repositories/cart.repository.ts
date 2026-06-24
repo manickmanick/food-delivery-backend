@@ -82,9 +82,11 @@ export class CartRepository {
   }
 
   async clearCart(cartId: number) {
-    return prisma.cartItem.deleteMany({
+    console.log("cartId -> ",cartId);
+    
+    await prisma.cart.delete({
       where: {
-        cartId,
+        id: cartId,
       },
     });
   }

@@ -111,7 +111,7 @@ model CartItem {
 
   menuItemId Int
 
-  cart Cart @relation(fields: [cartId], references: [id])
+  cart Cart @relation(fields: [cartId], references: [id], onDelete: Cascade)
 
   menuItem MenuItem @relation(fields: [menuItemId], references: [id])
 

@@ -29,7 +29,7 @@ export class CartController {
     const item = await cartService.updateQuantity(
       Number(req.params.id),
       req.body.quantity,
-      req.user!.id
+      req.user!.id,
     );
     return res.status(200).json({
       success: true,
@@ -39,7 +39,7 @@ export class CartController {
   }
 
   async removeItem(req: AuthRequest, res: Response) {
-    // await cartService.removeItem(Number(req.params.id));
+    await cartService.removeItem(Number(req.params.id), req.user!.id);
 
     return res.status(200).json({
       success: true,
