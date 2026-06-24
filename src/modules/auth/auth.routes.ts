@@ -29,12 +29,7 @@ router.post(
 router.get(
   "/me",
   protect,
-  asyncHandler(async (req: AuthRequest, res) => {
-    res.json({
-      success: true,
-      user: req.user,
-    });
-  }),
+  asyncHandler(authController.me.bind(authController)),
 );
 
 export default router;

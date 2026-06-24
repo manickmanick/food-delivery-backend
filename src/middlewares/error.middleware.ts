@@ -5,9 +5,9 @@ export const errorMiddleware = (
   err: Error,
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
-  console.error(err);
+  console.log("Error middleware reached:", err.message);
 
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
