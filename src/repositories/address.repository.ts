@@ -55,4 +55,12 @@ export class AddressRepository {
       },
     });
   }
+  async findByIdAndUserId(id: number, userId: number) {
+    return prisma.address.findFirst({
+      where: {
+        id,
+        userId,
+      },
+    });
+  }
 }

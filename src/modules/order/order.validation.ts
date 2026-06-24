@@ -11,5 +11,5 @@ export const updateOrderStatusSchema = z.object({
 });
 
 export const placeOrderSchema = z.object({
-  addressId: z.number().positive(),
+  addressId: z.coerce.number().positive(),
 });
