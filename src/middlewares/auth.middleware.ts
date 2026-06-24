@@ -24,6 +24,8 @@ export const protect = (
       role: string;
     };
 
+    console.log("decoded -> ", decoded);
+
     req.user = decoded;
 
     next();

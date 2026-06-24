@@ -34,8 +34,9 @@ model Restaurant {
 
   name        String
   description String?
-
   address String
+
+  imageUrl String?
 
   rating Float   @default(0)
   isOpen Boolean @default(true)

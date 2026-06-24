@@ -10,6 +10,7 @@ export class RestaurantService {
       name: string;
       description?: string;
       address: string;
+      imageUrl?: string;
     },
     ownerId: number,
   ) {
@@ -57,37 +58,19 @@ export class RestaurantService {
     return this.restaurantRepository.update(restaurantId, data);
   }
 
-  async deleteRestaurant(
-  restaurantId: number,
-  userId: number,
-  role: string
-) {
+  async deleteRestaurant(restaurantId: number, userId: number, role: string) {
+    const restaurant = await this.restaurantRepository.findById(restaurantId);
 
-  const restaurant =
-    await this.restaurantRepository.findById(
-      restaurantId
-    );
+    if (!restaurant) {
+      throw new AppError("Restaurant not found", 404);
+    }
 
-  if (!restaurant) {
-    throw new AppError(
-      "Restaurant not found",
-      404
-    );
+    if (restaurant.ownerId !== userId) {
+      throw new AppError("You are not allowed to delete this restaurant", 403);
+    }
+
+    await this.restaurantRepository.delete(restaurantId);
+
+    return;
   }
-
-  if (
-    restaurant.ownerId !== userId
-  ) {
-    throw new AppError(
-      "You are not allowed to delete this restaurant",
-      403
-    );
-  }
-
-  await this.restaurantRepository.delete(
-    restaurantId
-  );
-
-  return;
-}
 }

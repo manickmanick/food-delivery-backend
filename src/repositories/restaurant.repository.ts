@@ -6,6 +6,7 @@ export class RestaurantRepository {
     description?: string;
     address: string;
     ownerId: number;
+    imageUrl?: string;
   }) {
     return prisma.restaurant.create({
       data,
