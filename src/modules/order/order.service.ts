@@ -4,6 +4,7 @@ import { AppError } from "../../utils/app-error";
 
 import { OrderRepository } from "../../repositories/order.repository";
 import { AddressRepository } from "../../repositories/address.repository";
+import { getIO } from "../../socket";
 
 export class OrderService {
   private orderRepository = new OrderRepository();
@@ -61,7 +62,15 @@ export class OrderService {
       throw new AppError("Forbidden", 403);
     }
 
-    return this.orderRepository.updateStatus(orderId, OrderStatus.ACCEPTED);
+    const updateOrder = await this.orderRepository.updateStatus(
+      orderId,
+      OrderStatus.ACCEPTED,
+    );
+    getIO().to(`user-${order.userId}`).emit("order-status-updated", {
+      orderId,
+      status: "ACCEPTED",
+    });
+    return updateOrder;
   }
 
   async updateOrderStatus(
@@ -79,8 +88,17 @@ export class OrderService {
       throw new AppError("Forbidden", 403);
     }
 
-    return this.orderRepository.updateStatus(orderId, status);
+    const updateOrder = await this.orderRepository.updateStatus(
+      orderId,
+      status,
+    );
+    getIO().to(`user-${order.userId}`).emit("order-status-updated", {
+      orderId,
+      status,
+    });
+    return updateOrder;
   }
+
   async getRestaurantOrders(ownerId: number) {
     return this.orderRepository.findOrdersByRestaurantOwner(ownerId);
   }
