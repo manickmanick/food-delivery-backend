@@ -132,4 +132,62 @@ export class OrderRepository {
       },
     });
   }
+
+  async findOrderByIdWithRestaurant(orderId: number) {
+    return prisma.order.findUnique({
+      where: {
+        id: orderId,
+      },
+
+      include: {
+        restaurant: true,
+      },
+    });
+  }
+
+  async findOrdersByRestaurantOwner(ownerId: number) {
+    return prisma.order.findMany({
+      where: {
+        restaurant: {
+          ownerId,
+        },
+      },
+
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
+
+        restaurant: true,
+
+        address: true,
+
+        items: {
+          include: {
+            menuItem: true,
+          },
+        },
+      },
+
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }
+
+  async findOrderForOwner(orderId: number) {
+    return prisma.order.findUnique({
+      where: {
+        id: orderId,
+      },
+
+      include: {
+        restaurant: true,
+      },
+    });
+  }
 }

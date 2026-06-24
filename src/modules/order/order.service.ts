@@ -50,11 +50,38 @@ export class OrderService {
     return order;
   }
 
-  async acceptOrder(orderId: number) {
+  async acceptOrder(orderId: number, ownerId: number) {
+    const order = await this.orderRepository.findOrderForOwner(orderId);
+
+    if (!order) {
+      throw new AppError("Order not found", 404);
+    }
+
+    if (order.restaurant.ownerId !== ownerId) {
+      throw new AppError("Forbidden", 403);
+    }
+
     return this.orderRepository.updateStatus(orderId, OrderStatus.ACCEPTED);
   }
 
-  async updateOrderStatus(orderId: number, status: OrderStatus) {
+  async updateOrderStatus(
+    orderId: number,
+    status: OrderStatus,
+    ownerId: number,
+  ) {
+    const order = await this.orderRepository.findOrderForOwner(orderId);
+
+    if (!order) {
+      throw new AppError("Order not found", 404);
+    }
+
+    if (order.restaurant.ownerId !== ownerId) {
+      throw new AppError("Forbidden", 403);
+    }
+
     return this.orderRepository.updateStatus(orderId, status);
+  }
+  async getRestaurantOrders(ownerId: number) {
+    return this.orderRepository.findOrdersByRestaurantOwner(ownerId);
   }
 }

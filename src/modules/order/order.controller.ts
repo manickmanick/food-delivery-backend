@@ -40,7 +40,10 @@ export class OrderController {
   }
 
   async acceptOrder(req: AuthRequest, res: Response) {
-    const order = await orderService.acceptOrder(Number(req.params.id));
+    const order = await orderService.acceptOrder(
+      Number(req.params.id),
+      req.user!.id,
+    );
 
     return res.status(200).json({
       success: true,
@@ -53,12 +56,21 @@ export class OrderController {
     const order = await orderService.updateOrderStatus(
       Number(req.params.id),
       req.body.status,
+      req.user!.id,
     );
 
     return res.status(200).json({
       success: true,
       message: "Order status updated",
       data: order,
+    });
+  }
+  async getRestaurantOrders(req: AuthRequest, res: Response) {
+    const orders = await orderService.getRestaurantOrders(req.user!.id);
+
+    return res.status(200).json({
+      success: true,
+      data: orders,
     });
   }
 }

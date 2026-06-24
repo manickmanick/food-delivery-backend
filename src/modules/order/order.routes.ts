@@ -32,6 +32,13 @@ router.get(
 );
 
 router.get(
+  "/restaurant",
+  protect,
+  authorize(Role.RESTAURANT_OWNER),
+  asyncHandler(orderController.getRestaurantOrders.bind(orderController)),
+);
+
+router.get(
   "/:id",
   protect,
   asyncHandler(orderController.getOrderById.bind(orderController)),
@@ -50,6 +57,12 @@ router.patch(
   authorize(Role.RESTAURANT_OWNER),
   validate(updateOrderStatusSchema),
   asyncHandler(orderController.updateOrderStatus.bind(orderController)),
+);
+router.get(
+  "/restaurant",
+  protect,
+  authorize(Role.RESTAURANT_OWNER),
+  asyncHandler(orderController.getRestaurantOrders.bind(orderController)),
 );
 
 export default router;
