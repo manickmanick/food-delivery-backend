@@ -5,6 +5,9 @@ A production-style Food Delivery Backend built with **Node.js**, **TypeScript**,
 ### 💻 Frontend Repository
 Looking for the user interface? Check out the [Food Delivery Frontend Repository](https://github.com/manickmanick/food-delivery-frontend).
 
+### Demo Video 
+[Youtube URL](https://youtu.be/2ETQRvjJafk)
+
 ---
 
 # 🚀 Features
