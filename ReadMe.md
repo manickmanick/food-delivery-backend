@@ -2,6 +2,9 @@
 
 A production-style Food Delivery Backend built with **Node.js**, **TypeScript**, **Express**, **Prisma**, **mySQL**, **JWT Authentication**, **Role-Based Authorization**, and **Socket.IO** for real-time order tracking.
 
+### 💻 Frontend Repository
+Looking for the user interface? Check out the [Food Delivery Frontend Repository](https://github.com/manickmanick/food-delivery-frontend).
+
 ---
 
 # 🚀 Features
