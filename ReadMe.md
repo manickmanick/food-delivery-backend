@@ -1,6 +1,6 @@
 # 🍔 Food Delivery Backend API
 
-A production-style Food Delivery Backend built with **Node.js**, **TypeScript**, **Express**, **Prisma**, **PostgreSQL**, **JWT Authentication**, **Role-Based Authorization**, and **Socket.IO** for real-time order tracking.
+A production-style Food Delivery Backend built with **Node.js**, **TypeScript**, **Express**, **Prisma**, **mySQL**, **JWT Authentication**, **Role-Based Authorization**, and **Socket.IO** for real-time order tracking.
 
 ---
 
